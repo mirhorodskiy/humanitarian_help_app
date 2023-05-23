@@ -1,0 +1,63 @@
+version: '3.5'
+
+services:
+  service-db:
+    container_name: "volunteer-project-db"
+    image: postgres:14.7-alpine
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=volunteerProject
+    volumes:
+      - volunteer-project-db-data:/var/lib/postgresql/data
+    #      - ./infrastructure/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  client-backend:
+    image: client:0.0.3
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8181:8181"
+    depends_on:
+      - service-db
+    environment:
+      - SERVER_PORT=8181
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/volunteerProject
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4:7
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  volunteer-project-db-data:
+  pgadmin-data:
+#    container_name: mypgadmin_container
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#    volumes:
+#      - pgadmin:/var/lib/pgadmin
+#
+#    ports:
+#      - "${PGADMIN_PORT:-5051}:80"
+#    networks:
+#      - postgres
+#    restart: unless-stopped
+
+#networks:
+#  postgres:
+#    driver: bridge
