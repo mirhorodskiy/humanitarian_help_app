@@ -11,6 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
+@CrossOrigin(origins = "*",
+        allowedHeaders = "*",
+        exposedHeaders = "*",
+        methods = {GET, POST, PUT, DELETE},
+        maxAge = 3600)
 @RestController
 @RequestMapping("/users")
 public class UserController {
