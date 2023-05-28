@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -38,19 +40,32 @@ public class HelpRequestController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<HelpRequestDto>> getAllRequests() {
-        return new ResponseEntity<>(helpRequestService.getAllRequests(), HttpStatus.OK);
+//    public ResponseEntity<List<HelpRequestDto>> getAllRequests() {
+    public ResponseEntity<?> getAllRequests() {
+        Map<String,Object> result = new HashMap<>();
+        result.put("result", helpRequestService.getAllRequests());
+        result.put("status", HttpStatus.OK.toString());
+//        return new ResponseEntity<>(helpRequestService.getAllRequests(), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/all/open")
-    public ResponseEntity<List<HelpRequestDto>> getAllOpenRequests() {
-        return new ResponseEntity<>(helpRequestService.getAllOpenRequests(), HttpStatus.OK);
+    public ResponseEntity<?> getAllOpenRequests() {
+//    public ResponseEntity<List<HelpRequestDto>> getAllOpenRequests() {
+        Map<String,Object> result = new HashMap<>();
+        result.put("result", helpRequestService.getAllOpenRequests());
+        result.put("status", HttpStatus.OK.toString());
+//        return new ResponseEntity<>(helpRequestService.getAllOpenRequests(), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/my")
-    public ResponseEntity<List<HelpRequestDto>> getUserRequests(HttpServletRequest request) {
+    public ResponseEntity<?> getUserRequests(HttpServletRequest request) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        return new ResponseEntity<>(helpRequestService.getUserRequests(token), HttpStatus.OK);
+        Map<String,Object> result = new HashMap<>();
+        result.put("result", helpRequestService.getUserRequests(token));
+        result.put("status", HttpStatus.OK.toString());
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -104,8 +119,12 @@ public class HelpRequestController {
     }
 
     @GetMapping("/admin/requests")
-    public ResponseEntity<List<HelpRequestDto>> getProcessingRequests() {
-        return new ResponseEntity<>(helpRequestService.getProcessingRequests(), HttpStatus.OK);
+    public ResponseEntity<?> getProcessingRequests() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("result", helpRequestService.getProcessingRequests());
+//        return new ResponseEntity<>(volunteerService.getUnapprovedVolunteers(), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+//        return new ResponseEntity<>(helpRequestService.getProcessingRequests(), HttpStatus.OK);
     }
 
     @PostMapping("/admin/approve/{id}")
@@ -113,4 +132,11 @@ public class HelpRequestController {
         helpRequestService.approveProcessedRequest(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/admin/deny/{id}")
+    public ResponseEntity<?> denyProcessedRequest(@PathVariable Long id) {
+        helpRequestService.denyProcessedRequest(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

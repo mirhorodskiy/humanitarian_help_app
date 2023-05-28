@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -55,8 +57,11 @@ public class VolunteerController {
     }
 
     @GetMapping("/admin/unapproved")
-    public ResponseEntity<List<VolunteerDto>> getUnapprovedVolunteers() {
-        return new ResponseEntity<>(volunteerService.getUnapprovedVolunteers(), HttpStatus.OK);
+    public ResponseEntity<?> getUnapprovedVolunteers() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("result", volunteerService.getUnapprovedVolunteers());
+//        return new ResponseEntity<>(volunteerService.getUnapprovedVolunteers(), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/admin/approve/{id}")

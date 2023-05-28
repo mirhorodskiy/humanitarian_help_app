@@ -8,8 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -33,13 +38,17 @@ public class AuthenticationController {
         authenticationService.registration(signUpDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO request) {
+    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO request) throws LoginException {
 
         String token = authenticationService.login(request);
         if (token == null)
-            return new ResponseEntity<>("Invalid email/password combination", HttpStatus.FORBIDDEN);
-        return new ResponseEntity<>(token, HttpStatus.OK);
+            throw new LoginException("Invalid email/password combination");
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        response.put("status", HttpStatus.OK.toString());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/logout")
