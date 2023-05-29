@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/request/create").hasAnyRole(Role.USER.name())
                 .antMatchers("/request/all/**").permitAll()
                 .antMatchers("/request/my").hasAnyRole(Role.USER.name())
+                .antMatchers("/request/volunteers/my").hasAnyRole(Role.VOLUNTEER.name())
                 .antMatchers("/request/{id}").permitAll()
                 .antMatchers("/request/delete/**").hasAnyRole(Role.USER.name())
                 .antMatchers("/request/change").hasAnyRole(Role.USER.name())

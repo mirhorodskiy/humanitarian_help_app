@@ -24,6 +24,7 @@ public class UserMapperService {
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .phone(user.getPhone())
+                .role(user.getRole())
                 .build();
     }
 

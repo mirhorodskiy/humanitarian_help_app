@@ -27,6 +27,7 @@ public class VolunteerMapperService {
                 .address(volunteer.getAddress())
                 .description(volunteer.getDescription())
                 .website(volunteer.getWebsite())
+                .role(volunteer.getRole())
                 .isChecked(volunteer.isChecked())
                 .build();
     }

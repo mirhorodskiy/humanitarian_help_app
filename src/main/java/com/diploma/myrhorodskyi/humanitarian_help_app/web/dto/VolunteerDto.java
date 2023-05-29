@@ -1,5 +1,6 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.web.dto;
 
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,8 @@ public class VolunteerDto {
     private String address;
 
     private String website;
+
+    private Role role;
 
     private boolean isChecked;
 

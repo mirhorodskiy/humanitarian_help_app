@@ -118,6 +118,13 @@ public class HelpRequestController {
         }
     }
 
+    @GetMapping("/volunteers/my")
+    public ResponseEntity<?> getVolunteersRequestsInProgress(HttpServletRequest request) {
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        List<HelpRequestDto> requests = helpRequestService.getVolunteersRequestsInProgress(token);
+        return new ResponseEntity<>(requests, HttpStatus.OK);
+    }
+
     @GetMapping("/admin/requests")
     public ResponseEntity<?> getProcessingRequests() {
         Map<String, Object> result = new HashMap<>();

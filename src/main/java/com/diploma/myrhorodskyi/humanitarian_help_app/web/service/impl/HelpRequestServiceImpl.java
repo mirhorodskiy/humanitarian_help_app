@@ -143,6 +143,13 @@ public class HelpRequestServiceImpl implements HelpRequestService {
         helpRequestRepository.save(helpRequest);
     }
 
+    @Override
+    public List<HelpRequestDto> getVolunteersRequestsInProgress(String token) {
+        Long volunteerId = volunteerService.getVolunteerEntity(token).getId();
+        List<HelpRequest> requests = helpRequestRepository.findAllByVolunteerIdAndStatusInProgress(volunteerId);
+        return requests.stream().map(helpRequestMapperService::toDto).toList();
+    }
+
     private boolean checkIfRequestWasCreatedByUser(String token, Long id) {
         return Objects.equals(helpRequestRepository.findHelpRequestById(id).getUser().getId(), userService.getUser(token).getId());
     }

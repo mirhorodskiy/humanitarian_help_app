@@ -31,5 +31,5 @@ public interface HelpRequestService {
 
     void takeRequestByVolunteer(Long requestId, String token) throws IllegalAccessException;
 
-
+    List<HelpRequestDto> getVolunteersRequestsInProgress(String token);
 }
