@@ -1,8 +1,8 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.web.mapper;
 
 import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.User;
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.Role;
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.Status;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.Role;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.Status;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

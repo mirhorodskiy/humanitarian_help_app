@@ -1,6 +1,6 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.web.security;
 
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.Role;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

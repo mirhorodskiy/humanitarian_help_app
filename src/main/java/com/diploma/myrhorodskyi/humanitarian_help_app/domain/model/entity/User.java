@@ -3,8 +3,8 @@ package com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity;
 
 import javax.persistence.*;
 
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.Role;
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.Status;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.Role;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.Status;
 import lombok.*;
 
 import java.util.Collection;

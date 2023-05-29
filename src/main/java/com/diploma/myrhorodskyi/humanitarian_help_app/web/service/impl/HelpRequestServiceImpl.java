@@ -1,8 +1,7 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.web.service.impl;
 
 import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.HelpRequest;
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.User;
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.RequestStatus;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.RequestStatus;
 import com.diploma.myrhorodskyi.humanitarian_help_app.domain.repository.HelpRequestRepository;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.dto.HelpRequestDto;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.error.IllegalAccessException;

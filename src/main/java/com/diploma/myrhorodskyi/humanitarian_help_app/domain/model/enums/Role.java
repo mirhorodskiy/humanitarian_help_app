@@ -1,4 +1,4 @@
-package com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums;
+package com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

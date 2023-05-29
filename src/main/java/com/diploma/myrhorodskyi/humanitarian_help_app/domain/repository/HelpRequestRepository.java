@@ -1,10 +1,8 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.domain.repository;
 
 import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.HelpRequest;
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.Volunteer;
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.RequestCategory;
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.RequestStatus;
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.Status;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.RequestCategory;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.RequestStatus;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

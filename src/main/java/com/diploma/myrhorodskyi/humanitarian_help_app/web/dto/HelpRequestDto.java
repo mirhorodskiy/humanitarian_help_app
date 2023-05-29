@@ -1,7 +1,7 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.web.dto;
 
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.RequestCategory;
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.enums.RequestStatus;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.RequestCategory;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.RequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
