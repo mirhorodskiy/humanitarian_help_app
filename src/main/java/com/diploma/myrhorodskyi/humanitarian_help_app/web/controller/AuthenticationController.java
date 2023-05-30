@@ -1,8 +1,10 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.web.controller;
 
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.Role;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.dto.AuthenticationRequestDTO;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.dto.SignUpDto;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.service.impl.AuthenticationServiceImpl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -57,6 +59,15 @@ public class AuthenticationController {
         securityContextLogoutHandler.logout(request, response, null);
     }
 
+    @GetMapping("/role")
+    public ResponseEntity<?> getRole(HttpServletRequest request) {
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        Role role = authenticationService.getRole(token);
+        Map<String, Object> response = new HashMap<>();
+        response.put("Role", role);
+        response.put("status", HttpStatus.OK.toString());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 
 }

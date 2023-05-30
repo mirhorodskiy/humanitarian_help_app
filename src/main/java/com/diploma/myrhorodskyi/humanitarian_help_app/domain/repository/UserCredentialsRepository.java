@@ -1,7 +1,8 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.domain.repository;
 
-import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.User;
 import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.UserCredentials;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.Role;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

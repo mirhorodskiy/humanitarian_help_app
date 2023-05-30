@@ -123,4 +123,12 @@ public class AuthenticationServiceImpl {
         return null;
     }
 
+    public Role getRole(String token) {
+        return userCredentialsRepository.findByEmail(getCredentialsEmailByToken(token)).get().getRole();
+    }
+
+    private String getCredentialsEmailByToken(String token) {
+        return jwtTokenProvider.getUsername(token);
+    }
+
 }
