@@ -1,5 +1,6 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.web.service;
 
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.RequestCategory;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.dto.HelpRequestDto;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.error.IllegalAccessException;
 
@@ -32,4 +33,12 @@ public interface HelpRequestService {
     void takeRequestByVolunteer(Long requestId, String token) throws IllegalAccessException;
 
     List<HelpRequestDto> getVolunteersRequestsInProgress(String token);
+
+    List<HelpRequestDto> getOpenRequestsByLocation(String location);
+
+    List<HelpRequestDto> getOpenRequestsByCategory(RequestCategory category);
+
+    List<HelpRequestDto> getOpenRequestsByCategoryAndLocation(String location, RequestCategory category);
+
+    List<HelpRequestDto> getOpenRequestsByLocationAndOrCategory(String location, RequestCategory category);
 }

@@ -25,4 +25,8 @@ public interface HelpRequestRepository extends CrudRepository<HelpRequest, Long>
 
     HelpRequest findHelpRequestById(Long id);
 
+    List<HelpRequest> findAllByLocation(String location);
+
+    List<HelpRequest> findAllByLocationAndCategory(String location, RequestCategory category);
+
 }

@@ -1,5 +1,6 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.web.controller;
 
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.RequestCategory;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.dto.HelpRequestDto;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.error.IllegalAccessException;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.service.HelpRequestService;
@@ -57,6 +58,17 @@ public class HelpRequestController {
         result.put("status", HttpStatus.OK.toString());
 //        return new ResponseEntity<>(helpRequestService.getAllOpenRequests(), HttpStatus.OK);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/open-by")
+    public ResponseEntity<?> getAllOpenRequestsByCategoryAndOrLocation(@RequestParam(required = false) String location,
+                                                                       @RequestParam(required = false) RequestCategory category) {
+        Map<String, Object> map = new HashMap<>();
+        List<HelpRequestDto> requests = helpRequestService.getOpenRequestsByLocationAndOrCategory(location, category);
+
+        map.put("result", requests);
+        map.put("status", HttpStatus.OK.toString());
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @GetMapping("/my")

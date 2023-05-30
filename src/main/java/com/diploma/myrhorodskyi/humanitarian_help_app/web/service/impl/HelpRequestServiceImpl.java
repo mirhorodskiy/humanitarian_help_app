@@ -1,6 +1,7 @@
 package com.diploma.myrhorodskyi.humanitarian_help_app.web.service.impl;
 
 import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.entity.HelpRequest;
+import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.RequestCategory;
 import com.diploma.myrhorodskyi.humanitarian_help_app.domain.model.enums.RequestStatus;
 import com.diploma.myrhorodskyi.humanitarian_help_app.domain.repository.HelpRequestRepository;
 import com.diploma.myrhorodskyi.humanitarian_help_app.web.dto.HelpRequestDto;
@@ -148,6 +149,35 @@ public class HelpRequestServiceImpl implements HelpRequestService {
         Long volunteerId = volunteerService.getVolunteerEntity(token).getId();
         List<HelpRequest> requests = helpRequestRepository.findAllByVolunteerIdAndStatusInProgress(volunteerId);
         return requests.stream().map(helpRequestMapperService::toDto).toList();
+    }
+
+    @Override
+    public List<HelpRequestDto> getOpenRequestsByLocation(String location) {
+        List<HelpRequest> requests = helpRequestRepository.findAllByLocation(location);
+        return requests.stream().map(helpRequestMapperService::toDto).toList();
+    }
+
+    @Override
+    public List<HelpRequestDto> getOpenRequestsByCategory(RequestCategory category) {
+        List<HelpRequest> requests = helpRequestRepository.findAllByCategory(category);
+        return requests.stream().map(helpRequestMapperService::toDto).toList();
+    }
+
+    @Override
+    public List<HelpRequestDto> getOpenRequestsByCategoryAndLocation(String location, RequestCategory category) {
+        List<HelpRequest> requests = helpRequestRepository.findAllByLocationAndCategory(location, category);
+        return requests.stream().map(helpRequestMapperService::toDto).toList();
+    }
+
+    @Override
+    public List<HelpRequestDto> getOpenRequestsByLocationAndOrCategory(String location, RequestCategory category) {
+        if(location != null && category != null) {
+           return getOpenRequestsByCategoryAndLocation(location, category);
+        }
+        if (location != null)
+            return getOpenRequestsByLocation(location);
+
+        return getOpenRequestsByCategory(category);
     }
 
     private boolean checkIfRequestWasCreatedByUser(String token, Long id) {
