@@ -79,7 +79,7 @@ public class VolunteerServiceImpl implements VolunteerService {
 
     @Override
     public List<VolunteerDto> getUnapprovedVolunteers() {
-        List<Volunteer> volunteers = volunteerRepository.findAllByCheckedIsTrue();
+        List<Volunteer> volunteers = volunteerRepository.findAllByCheckedIsFalse();
         return volunteers.stream().map(volunteerMapperService::toDto).toList();
     }
 

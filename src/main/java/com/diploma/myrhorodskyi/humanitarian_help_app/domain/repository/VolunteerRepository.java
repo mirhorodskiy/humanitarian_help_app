@@ -16,6 +16,6 @@ public interface VolunteerRepository extends CrudRepository<Volunteer, Long> {
     Optional<Volunteer> findByName(String name);
     List<Volunteer> findAll();
 
-    @Query("select v from Volunteer v where v.isChecked = true")
-    List<Volunteer> findAllByCheckedIsTrue();
+    @Query("select v from Volunteer v where v.isChecked = false")
+    List<Volunteer> findAllByCheckedIsFalse();
 }
