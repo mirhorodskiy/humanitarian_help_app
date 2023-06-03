@@ -42,10 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/volunteers/all").permitAll()
                 .antMatchers("/volunteers/profile/**").hasAnyRole(Role.VOLUNTEER.name())
                 .antMatchers("/volunteers/{id}").permitAll()
-                .antMatchers("/volunteers/admin/approve/{id}").permitAll()
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/users/profile").hasAnyRole(Role.ADMIN.name())
+                .antMatchers("/volunteers/admin/approve/{id}").hasAnyRole(Role.ADMIN.name())
+
                 .antMatchers("/users/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                 .antMatchers("/request/create").hasAnyRole(Role.USER.name())
                 .antMatchers("/request/all/**").permitAll()

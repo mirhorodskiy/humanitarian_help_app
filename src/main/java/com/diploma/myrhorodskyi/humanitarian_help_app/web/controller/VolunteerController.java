@@ -64,7 +64,7 @@ public class VolunteerController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/admin/approve/{id}")
+    @PostMapping("/admin/approve/{id}")
     public ResponseEntity<?> approveVolunteer(@PathVariable Long id) {
         volunteerService.approveVolunteer(id);
         return new ResponseEntity<>(HttpStatus.OK);
