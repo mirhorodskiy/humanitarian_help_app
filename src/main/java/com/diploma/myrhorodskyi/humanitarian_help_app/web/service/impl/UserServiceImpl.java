@@ -29,6 +29,13 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
     }
 
+    @Override
+    public UserDto getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
+        return userMapperService.toDto(user);
+    }
+
 
     public UserDto getUser(String token) {
         User user = userRepository.findByEmail(getEmailByToken(token))

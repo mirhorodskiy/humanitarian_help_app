@@ -10,4 +10,6 @@ public interface UserService {
     UserDto updateUser(UserDto userDto, String token);
 
     User getUserEntity(String token);
+
+    UserDto getUserById(Long id);
 }
