@@ -49,10 +49,24 @@ public class HelpRequestServiceImpl implements HelpRequestService {
         return helpRequestMapperService.toDto(helpRequest);
     }
 
+//    @Override
+//    public List<HelpRequestDto> getAllRequests() {
+//        List<HelpRequest> requests = helpRequestRepository.findAll();
+//        return requests.stream().map(helpRequestMapperService::toDto).toList();
+//    }
+
     @Override
-    public List<HelpRequestDto> getAllRequests() {
-        List<HelpRequest> requests = helpRequestRepository.findAll();
-        return requests.stream().map(helpRequestMapperService::toDto).toList();
+    public List<HelpRequestDto> getAllRequests(String location, RequestCategory category, Boolean open) {
+
+
+        if (open != null) {
+            return getOpenRequestsByLocationAndOrCategory(location, category);
+        } else
+            return getAllRequestsByLocationAndOrCategory(location, category);
+//        } else {
+//            List<HelpRequest> requests = helpRequestRepository.findAllOpen();
+//            return requests.stream().map(helpRequestMapperService::toDto).toList();
+//        }
     }
 
     @Override
@@ -95,17 +109,17 @@ public class HelpRequestServiceImpl implements HelpRequestService {
 
     @Override
     public void deleteRequest(Long id, String token) throws IllegalAccessException {
-        if(!checkIfRequestWasCreatedByUser(token, id))
+        if (!checkIfRequestWasCreatedByUser(token, id))
             throw new IllegalAccessException("User has no permission", HttpStatus.FORBIDDEN);
         helpRequestRepository.delete(helpRequestRepository.findHelpRequestById(id));
     }
 
     @Override
     public HelpRequestDto changeRequest(HelpRequestDto helpRequestDto, String token) throws IllegalAccessException {
-        if(!checkIfRequestWasCreatedByUser(token, helpRequestDto.getId()))
+        if (!checkIfRequestWasCreatedByUser(token, helpRequestDto.getId()))
             throw new IllegalAccessException("User has no permission", HttpStatus.FORBIDDEN);
         HelpRequest helpRequest = helpRequestRepository.findHelpRequestById(helpRequestDto.getId());
-        if(helpRequest.getStatus().equals(RequestStatus.COMPLETED) ||
+        if (helpRequest.getStatus().equals(RequestStatus.COMPLETED) ||
                 helpRequest.getStatus().equals(RequestStatus.IN_PROGRESS))
             throw new IllegalAccessException("Help request is already completed or in progress", HttpStatus.FORBIDDEN);
 
@@ -121,11 +135,11 @@ public class HelpRequestServiceImpl implements HelpRequestService {
     @Override
     public void approveRequestByUser(Long requestId, String token) throws IllegalAccessException {
 
-        if(!checkIfRequestWasCreatedByUser(token, requestId))
+        if (!checkIfRequestWasCreatedByUser(token, requestId))
             throw new IllegalAccessException("User has no permission", HttpStatus.FORBIDDEN);
         HelpRequest helpRequest = helpRequestRepository.findHelpRequestById(requestId);
 
-        if(!helpRequest.getStatus().equals(RequestStatus.IN_PROGRESS))
+        if (!helpRequest.getStatus().equals(RequestStatus.IN_PROGRESS))
             throw new IllegalAccessException("You cant approve not in progress request", HttpStatus.FORBIDDEN);
 
         helpRequest.setStatus(RequestStatus.COMPLETED);
@@ -136,7 +150,7 @@ public class HelpRequestServiceImpl implements HelpRequestService {
     public void takeRequestByVolunteer(Long requestId, String token) throws IllegalAccessException {
 
         HelpRequest helpRequest = helpRequestRepository.findHelpRequestById(requestId);
-        if(!helpRequest.getStatus().equals(RequestStatus.SEEKING_VOLUNTEER))
+        if (!helpRequest.getStatus().equals(RequestStatus.SEEKING_VOLUNTEER))
             throw new IllegalAccessException("Request is in processing or was taken by another volunteer",
                     HttpStatus.FORBIDDEN);
         helpRequest.setStatus(RequestStatus.IN_PROGRESS);
@@ -153,31 +167,64 @@ public class HelpRequestServiceImpl implements HelpRequestService {
 
     @Override
     public List<HelpRequestDto> getOpenRequestsByLocation(String location) {
-        List<HelpRequest> requests = helpRequestRepository.findAllByLocation(location);
+        List<HelpRequest> requests = helpRequestRepository.findAllByLocationAndStatus(location, RequestStatus.SEEKING_VOLUNTEER);
         return requests.stream().map(helpRequestMapperService::toDto).toList();
     }
 
     @Override
     public List<HelpRequestDto> getOpenRequestsByCategory(RequestCategory category) {
-        List<HelpRequest> requests = helpRequestRepository.findAllByCategory(category);
+        List<HelpRequest> requests = helpRequestRepository.findAllByCategoryAndStatus(category, RequestStatus.SEEKING_VOLUNTEER);
         return requests.stream().map(helpRequestMapperService::toDto).toList();
     }
 
     @Override
     public List<HelpRequestDto> getOpenRequestsByCategoryAndLocation(String location, RequestCategory category) {
+        List<HelpRequest> requests = helpRequestRepository.findAllByLocationAndCategoryAndStatus(location, category, RequestStatus.SEEKING_VOLUNTEER);
+        return requests.stream().map(helpRequestMapperService::toDto).toList();
+    }
+
+    @Override
+    public List<HelpRequestDto> getAllRequestsByLocation(String location) {
+        List<HelpRequest> requests = helpRequestRepository.findAllByLocation(location);
+        return requests.stream().map(helpRequestMapperService::toDto).toList();
+    }
+
+    @Override
+    public List<HelpRequestDto> getAllRequestsByCategory(RequestCategory category) {
+        List<HelpRequest> requests = helpRequestRepository.findAllByCategory(category);
+        return requests.stream().map(helpRequestMapperService::toDto).toList();
+    }
+
+    @Override
+    public List<HelpRequestDto> getAllRequestsByCategoryAndLocation(String location, RequestCategory category) {
         List<HelpRequest> requests = helpRequestRepository.findAllByLocationAndCategory(location, category);
         return requests.stream().map(helpRequestMapperService::toDto).toList();
     }
 
     @Override
+    public List<HelpRequestDto> getAllRequestsByLocationAndOrCategory(String location, RequestCategory category) {
+        if (location != null && category != null) {
+            return getAllRequestsByCategoryAndLocation(location, category);
+        }
+        if (location != null)
+            return getAllRequestsByLocation(location);
+        if (category != null)
+            return getAllRequestsByCategory(category);
+        List<HelpRequest> requests = helpRequestRepository.findAll();
+        return requests.stream().map(helpRequestMapperService::toDto).toList();
+    }
+
+    @Override
     public List<HelpRequestDto> getOpenRequestsByLocationAndOrCategory(String location, RequestCategory category) {
-        if(location != null && category != null) {
-           return getOpenRequestsByCategoryAndLocation(location, category);
+        if (location != null && category != null) {
+            return getOpenRequestsByCategoryAndLocation(location, category);
         }
         if (location != null)
             return getOpenRequestsByLocation(location);
-
-        return getOpenRequestsByCategory(category);
+        if (category != null)
+            return getOpenRequestsByCategory(category);
+        List<HelpRequest> requests = helpRequestRepository.findAllByStatus(RequestStatus.SEEKING_VOLUNTEER);
+        return requests.stream().map(helpRequestMapperService::toDto).toList();
     }
 
     private boolean checkIfRequestWasCreatedByUser(String token, Long id) {

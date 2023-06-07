@@ -10,7 +10,7 @@ public interface HelpRequestService {
 
     HelpRequestDto createRequest(HelpRequestDto helpRequestDto, String token);
 
-    List<HelpRequestDto> getAllRequests();
+    List<HelpRequestDto> getAllRequests(String location, RequestCategory category, Boolean open);
 
     List<HelpRequestDto> getAllOpenRequests();
 
@@ -39,6 +39,14 @@ public interface HelpRequestService {
     List<HelpRequestDto> getOpenRequestsByCategory(RequestCategory category);
 
     List<HelpRequestDto> getOpenRequestsByCategoryAndLocation(String location, RequestCategory category);
+
+    List<HelpRequestDto> getAllRequestsByLocation(String location);
+
+    List<HelpRequestDto> getAllRequestsByCategory(RequestCategory category);
+
+    List<HelpRequestDto> getAllRequestsByCategoryAndLocation(String location, RequestCategory category);
+
+    List<HelpRequestDto> getAllRequestsByLocationAndOrCategory(String location, RequestCategory category);
 
     List<HelpRequestDto> getOpenRequestsByLocationAndOrCategory(String location, RequestCategory category);
 }

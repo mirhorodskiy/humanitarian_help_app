@@ -14,7 +14,12 @@ public interface HelpRequestRepository extends CrudRepository<HelpRequest, Long>
 
     List<HelpRequest> findAll();
 
+    @Query("select h from HelpRequest h where h.status = 'SEEKENG_VOLUNTEER'")
+    List<HelpRequest> findAllOpen();
+
     List<HelpRequest> findAllByStatus(RequestStatus status);
+
+    List<HelpRequest> findAllByCategoryAndStatus(RequestCategory category, RequestStatus status);
 
     List<HelpRequest> findAllByCategory(RequestCategory category);
 
@@ -25,7 +30,11 @@ public interface HelpRequestRepository extends CrudRepository<HelpRequest, Long>
 
     HelpRequest findHelpRequestById(Long id);
 
+    List<HelpRequest> findAllByLocationAndStatus(String location, RequestStatus status);
+
     List<HelpRequest> findAllByLocation(String location);
+
+    List<HelpRequest> findAllByLocationAndCategoryAndStatus(String location, RequestCategory category, RequestStatus status);
 
     List<HelpRequest> findAllByLocationAndCategory(String location, RequestCategory category);
 

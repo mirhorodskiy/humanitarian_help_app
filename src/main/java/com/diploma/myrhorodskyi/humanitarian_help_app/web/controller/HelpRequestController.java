@@ -40,23 +40,28 @@ public class HelpRequestController {
         return new ResponseEntity<>(helpRequestService.createRequest(helpRequestDto, token), HttpStatus.CREATED);
     }
 
+//    @GetMapping("/all")
+//    public ResponseEntity<?> getAllRequests() {
+//        Map<String,Object> result = new HashMap<>();
+//        result.put("result", helpRequestService.getAllRequests());
+//        result.put("status", HttpStatus.OK.toString());
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
     @GetMapping("/all")
-//    public ResponseEntity<List<HelpRequestDto>> getAllRequests() {
-    public ResponseEntity<?> getAllRequests() {
+    public ResponseEntity<?> getAllRequests(@RequestParam(required = false) String location,
+                                            @RequestParam(required = false) RequestCategory category,
+                                            @RequestParam(required = false) Boolean open) {
         Map<String,Object> result = new HashMap<>();
-        result.put("result", helpRequestService.getAllRequests());
+        result.put("result", helpRequestService.getAllRequests(location, category, open));
         result.put("status", HttpStatus.OK.toString());
-//        return new ResponseEntity<>(helpRequestService.getAllRequests(), HttpStatus.OK);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/all/open")
     public ResponseEntity<?> getAllOpenRequests() {
-//    public ResponseEntity<List<HelpRequestDto>> getAllOpenRequests() {
         Map<String,Object> result = new HashMap<>();
         result.put("result", helpRequestService.getAllOpenRequests());
         result.put("status", HttpStatus.OK.toString());
-//        return new ResponseEntity<>(helpRequestService.getAllOpenRequests(), HttpStatus.OK);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -44,9 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public String getEmailByToken(String token) {
-//        if(token == null || !token.startsWith("Bearer "))
-//            throw new IllegalArgumentException("Header is null or doesn't start with 'Bearer '");
-//        return jwtTokenProvider.getUsername(token.substring("Bearer".length()));
+
         return jwtTokenProvider.getUsername(token);
     }
 
